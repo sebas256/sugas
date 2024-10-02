@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProgramaDto } from './dto/create-programa.dto';
 import { UpdateProgramaDto } from './dto/update-programa.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -35,16 +35,30 @@ export class ProgramaService {
   }
  
 
-  update(id: number, updateProgramaDto: UpdateProgramaDto) {
-    return `This action updates a #${id} programa`;
+  async update(id: number, updateProgramaDto: UpdateProgramaDto): Promise<Programa> {
+    console.log(id)
+    const programa = await this.programaRepository.findOne({where : {id}});
+
+    if (!programa) {
+      throw new NotFoundException(`Programa con ID ${id} no encontrado`);
+    }
+    Object.assign(programa, updateProgramaDto);
+
+    // Guardar los cambios en la base de datos
+    return this.programaRepository.save(programa);
+    
   }
 
-  remove(codigo: string) {
-    const indice = this.programassena.findIndex((ele) => ele.codigo == codigo)
-    if (indice == -1)
-       return 'No existe un programa con ese codigo ...'
-    else
-      this.programassena.splice(indice,1)
-    return `El programa con codigo : ${codigo} fue borrado`;
+  async remove(codigo: string) {
+    // Buscar el usuario por su código (ID)
+    const programa = await this.programaRepository.findOne({ where: { codigo: codigo } });
+
+    // Lanzar excepción si no se encuentra el usuario
+    if (!programa) {
+      throw new NotFoundException(`Programa con código ${codigo} no encontrado`);
+    }
+
+    // Eliminar el usuario
+    await this.programaRepository.remove(programa);
   }
 }
