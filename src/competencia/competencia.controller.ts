@@ -21,12 +21,12 @@ export class CompetenciaController {
   findOne(@Param('id') id: string) {
     return this.competenciaService.findOne(id);
   }
-/*
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCompetenciaDto: UpdateCompetenciaDto) {
-    return this.competenciaService.update(id, updateCompetenciaDto);
+    return this.competenciaService.update(+id, updateCompetenciaDto);
   }
-*/
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.competenciaService.remove(id);

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCompetenciaDto } from './dto/create-competencia.dto';
 import { UpdateCompetenciaDto } from './dto/update-competencia.dto';
 import { Competencia } from './entities/competencia.entity';
@@ -24,13 +24,29 @@ export class CompetenciaService {
     return this.competenciaRepository.findOne({ where: { codigo }, relations: ['programas'] });
   }
 
-  async update(codigo: string, competencia: Competencia): Promise<Competencia> {
-    await this.competenciaRepository.update(codigo, competencia);
-    return this.findOne(codigo);
+  async update(id: number, updateCompetenciaDto: UpdateCompetenciaDto): Promise<Competencia> {
+    const compe = await this.competenciaRepository.findOne({where : {id}});
+
+    if (!compe) {
+      throw new NotFoundException(`Competencia con ID ${id} no encontrado`);
+    }
+    Object.assign(compe, updateCompetenciaDto);
+
+    // Guardar los cambios en la base de datos
+    return this.competenciaRepository.save(compe);
   }
 
 
   async remove(codigo: string): Promise<void> {
-    await this.competenciaRepository.delete(codigo);
+    // Buscar el usuario por su código (ID)
+    const competencia = await this.competenciaRepository.findOne({ where: { codigo: codigo } });
+
+    // Lanzar excepción si no se encuentra el usuario
+    if (!competencia) {
+      throw new NotFoundException(`Programa con código ${codigo} no encontrado`);
+    }
+
+    // Eliminar el usuario
+    await this.competenciaRepository.remove(competencia);
   }
 }
