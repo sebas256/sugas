@@ -1,5 +1,6 @@
 import { Competencia } from "src/competencia/entities/competencia.entity";
-import { Column, Entity, Index, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Resultado } from "src/resultados/entities/resultado.entity";
+import { Column, Entity, Index, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 @Index("IDX_PROGRAMA_CODIGO", ["codigo"], { unique: true })
@@ -15,7 +16,10 @@ export class Programa {
 
     @Column()
     version: number;
-  
+
+    @OneToMany(() => Resultado, resultado => resultado.programa)
+    resultados: Resultado[];
+    
     @ManyToMany(() => Competencia, competencia => competencia.programas)
     @JoinTable()
     competencias: Competencia[];

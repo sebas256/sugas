@@ -8,7 +8,7 @@ import { CompetenciaModule } from './competencia/competencia.module';
 import { Competencia } from './competencia/entities/competencia.entity';
 import { ResultadosModule } from './resultados/resultados.module';
 import { Resultado } from './resultados/entities/resultado.entity';
-
+import { ProgramacompetenciaModule } from './programacompetencia/programacompetencia.module';
 
 @Module({
   imports: [
@@ -24,7 +24,8 @@ import { Resultado } from './resultados/entities/resultado.entity';
     }),
     ProgramaModule,
     CompetenciaModule,
-    ResultadosModule],
+    ResultadosModule,
+    ProgramacompetenciaModule],
   controllers: [AppController],
   providers: [AppService],
 })

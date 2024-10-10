@@ -17,8 +17,9 @@ export class Competencia {
 
     @Column()
     duracion: number;
-  
-    @ManyToMany(() => Programa, programa => programa.competencias)
+
+    
+    @ManyToMany(() => Programa, programa => programa.competencias,{ nullable: false })
     programas: Programa[];
   
     @OneToMany(() => Resultado, (resultado) => resultado.competencia,{ nullable: false })

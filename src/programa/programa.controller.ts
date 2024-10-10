@@ -19,7 +19,7 @@ export class ProgramaController {
 
   @Get('codigo/:id')
   findOne(@Param('id') id: string) {
-    return this.programaService.findOne(id);
+    return this.programaService.findOne(+id);
   }
 
   @Patch(':id')

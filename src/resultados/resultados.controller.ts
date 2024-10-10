@@ -7,9 +7,12 @@ import { UpdateResultadoDto } from './dto/update-resultado.dto';
 export class ResultadosController {
   constructor(private readonly resultadosService: ResultadosService) {}
 
-  @Post()
-  create(@Body() createResultadoDto: CreateResultadoDto) {
-    return this.resultadosService.create(createResultadoDto);
+  @Post(':competenciaId/:programaId')
+  create(@Body() createResultadoDto: CreateResultadoDto,
+  @Param('competenciaId') competenciaId: number, 
+  @Param('programaId') programaId : number) {
+    console.log(programaId)
+    return this.resultadosService.create(createResultadoDto,competenciaId,programaId);
   }
 
   @Get()
@@ -22,13 +25,19 @@ export class ResultadosController {
     return this.resultadosService.findOne(+id);
   }
 
+  @Get(':idprograma/:idcompetencia')
+  findcomppro(@Param('idcompetencia') idcomp: number,
+  @Param('idprograma') idprog: number,) {
+    return this.resultadosService.findresultadoprocomp(idprog,idcomp);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateResultadoDto: UpdateResultadoDto) {
     return this.resultadosService.update(+id, updateResultadoDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.resultadosService.remove(+id);
+  @Delete('codigo/:id')
+  remove(@Param('id') id: number) {
+    return this.resultadosService.remove(id);
   }
 }

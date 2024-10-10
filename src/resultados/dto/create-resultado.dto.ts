@@ -6,13 +6,8 @@ export class CreateResultadoDto {
     @IsString()
     @IsNotEmpty()
     nombre : string;
-    @IsString()
-    @IsNotEmpty()  
-    codigo : string;
     @IsNumber()
     @IsNotEmpty()
     duracion : number;
-    @IsNumber()
-    @IsNotEmpty()
-    competencia : Competencia
+   
 }

@@ -30,10 +30,11 @@ export class ProgramaService {
     return this.programaRepository.find({ relations: ['competencias'] });
   }
 
-  findOne(codigo: string): Promise<Programa> {
-    return this.programaRepository.findOne({ where: { codigo }, relations: ['competencias'] });
+  //{ relations: ['competencias'] }
+  findOne(id: number): Promise<Programa> {
+    return this.programaRepository.findOne({ where: { id },  relations: ['competencias'] });
   }
- 
+ //
 
   async update(id: number, updateProgramaDto: UpdateProgramaDto): Promise<Programa> {
     console.log(id)
