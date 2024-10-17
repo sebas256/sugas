@@ -9,6 +9,8 @@ import { Competencia } from './competencia/entities/competencia.entity';
 import { ResultadosModule } from './resultados/resultados.module';
 import { Resultado } from './resultados/entities/resultado.entity';
 import { ProgramacompetenciaModule } from './programacompetencia/programacompetencia.module';
+import { ArchivoModule } from './archivo/archivo.module';
+import { Archivo } from './archivo/entities/archivo.entity';
 
 @Module({
   imports: [
@@ -19,13 +21,14 @@ import { ProgramacompetenciaModule } from './programacompetencia/programacompete
       username: 'root',
       password: '',
       database: 'gguias',
-      entities: [Programa, Competencia, Resultado],
+      entities: [Programa, Competencia, Resultado, Archivo],
       synchronize: true,
     }),
     ProgramaModule,
     CompetenciaModule,
     ResultadosModule,
-    ProgramacompetenciaModule],
+    ProgramacompetenciaModule,
+    ArchivoModule],
   controllers: [AppController],
   providers: [AppService],
 })
