@@ -11,6 +11,10 @@ import { Resultado } from './resultados/entities/resultado.entity';
 import { ProgramacompetenciaModule } from './programacompetencia/programacompetencia.module';
 import { ArchivoModule } from './archivo/archivo.module';
 import { Archivo } from './archivo/entities/archivo.entity';
+import { AuthModule } from './auth/auth.module';
+import { UsuariosModule } from './usuarios/usuarios.module';
+import { RolesModule } from './roles/roles.module';
+import { RoleSeedModule } from './roles/rol-seed.module';
 
 @Module({
   imports: [
@@ -21,14 +25,19 @@ import { Archivo } from './archivo/entities/archivo.entity';
       username: 'root',
       password: '',
       database: 'gguias',
-      entities: [Programa, Competencia, Resultado, Archivo],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    //  entities: [Programa, Competencia, Resultado, Archivo],
       synchronize: true,
     }),
     ProgramaModule,
     CompetenciaModule,
     ResultadosModule,
     ProgramacompetenciaModule,
-    ArchivoModule],
+    ArchivoModule,
+    AuthModule,
+    UsuariosModule,
+    RolesModule,
+    RoleSeedModule],
   controllers: [AppController],
   providers: [AppService],
 })
