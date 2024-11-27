@@ -30,16 +30,15 @@ export class ArchivoController {
   }
 
   @Patch(':id')
-  @Roles('admin')
+  @Roles('admin','coordinador')
   update(@Param('id') id: string, @Body() updateArchivoDto: UpdateArchivoDto) {
     return this.archivoService.update(+id, updateArchivoDto);
   }
 
   @Delete(':id')
-  @Roles('admin')
+  @Roles('admin','coordinador')
   remove(
     @Param('id') id: number
-   
   ) {
    return this.archivoService.remove(id);
   }
