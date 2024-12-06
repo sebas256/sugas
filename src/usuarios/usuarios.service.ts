@@ -1,5 +1,5 @@
 
-import { BadRequestException, Injectable, NotFoundException, UseGuards } from '@nestjs/common';
+import { Injectable, NotFoundException, UseGuards } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -140,23 +140,13 @@ export class UsuariosService {
   async findOne(id: number) {
     return await this.userRepository.findOne({
       where: { id },
-      relations: ['programa', 'role'],
-
+      relations: ['programa'],
     });
   }
   async findByEmail(email: string) {
     return await this.userRepository.findOne({
       where: { email },relations: ['role']
-    });
-  }
-  async findByCedula(cedula: string) {
-    return await this.userRepository.findOne({
-      where: { cedula },relations: ['role']
-    });
-  }
-  async findByTelefono(telefono: string) {
-    return await this.userRepository.findOne({
-      where: { telefono },relations: ['role']
+    
     });
   }
 async update( updateUserDto: UpdateUsuarioDto) {
@@ -169,19 +159,7 @@ async update( updateUserDto: UpdateUsuarioDto) {
     return await this.userRepository.save(user);
   }
 
-  async remove(id: number) {
-    const user = await this.findOne(id);
-    if (!user) {
-      throw new BadRequestException('User not found');
-    }
-    if(user.role.rol_name === 'admin'){
-      throw new BadRequestException('No se puede eliminar un admin');
-    }
-    try {
-      await this.userRepository.remove(user);
-      return { message: 'User deleted successfully' };
-    } catch (error) {
-      throw new BadRequestException('Error al eliminar el usuario');
-    }
+  remove(id: number) {
+    return `This action removes a #${id} user`;
   }
 }
